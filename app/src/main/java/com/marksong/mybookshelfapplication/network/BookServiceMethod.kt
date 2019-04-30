@@ -4,25 +4,25 @@ import com.marksong.bookshelfapp.model.BookList
 import com.marksong.bookshelfapp.model.BooksItem
 import retrofit2.Call
 import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.Path
 
 interface BookServiceMethod{
     @GET("new")
     fun getNewBooks(): Call<BookList>
 
-    @GET("search")
+    @GET("search/{searchPath}")
     fun getSearchBooks(
-            @Query("searchQuery") search: String
+            @Path("searchPath") search: String
     ): Call<BookList>
 
-    @GET("search")
+    @GET("search/{searchPath}/{page}")
     fun getSearchBooksPage(
-            @Query("searchQuery") search: String,
-            @Query("page") page: Int
+            @Path("searchPath") search: String,
+            @Path("page") page: Int
     ): Call<BookList>
 
     @GET("books")
     fun getBookDetail(
-            @Query("isbn") isbn: String
+            @Path("isbn") isbn: String
     ): Call<BooksItem>
 }
