@@ -55,6 +55,9 @@ data class BooksItem(
 	@field:SerializedName("desc")
 	val desc: String? = null,
 
+	//for bookmarking
+	var bookmark: Boolean = false,
+
 	//for objectbox
 	@Id var id: Long = 0
 ): Serializable

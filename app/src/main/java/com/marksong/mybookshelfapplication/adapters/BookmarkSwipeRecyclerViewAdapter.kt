@@ -11,24 +11,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.marksong.bookshelfapp.model.BookList
 import com.marksong.bookshelfapp.model.BooksItem
 import com.marksong.mybookshelfapplication.R
 import com.marksong.mybookshelfapplication.utils.BookUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.marksong.mybookshelfapplication.MainActivity
 
 
-class SwipeRecyclerViewAdapter(val context: Context, val bookList: ArrayList<BooksItem>): RecyclerSwipeAdapter<SwipeRecyclerViewAdapter.BookViewHolder>(){
+class BookmarkSwipeRecyclerViewAdapter(val context: Context, val bookList: ArrayList<BooksItem>): RecyclerSwipeAdapter<BookmarkSwipeRecyclerViewAdapter.BookViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
 
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.book_item_cardview, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.bookmark_item_cardview, parent, false)
         return BookViewHolder(view)
     }
 
     override fun getSwipeLayoutResourceId(position: Int): Int {
-        return R.id.swipe_bookItem
+        return R.id.swipe_bookmarked_book
     }
 
     override fun getItemCount(): Int {
@@ -82,22 +82,19 @@ class SwipeRecyclerViewAdapter(val context: Context, val bookList: ArrayList<Boo
             BookUtils.getBookDetails(context, manager, bookViewHolder.bookIsbn13.text.toString())
         }
 
-        bookViewHolder.deleteBtn.setOnClickListener { view ->
-            bookViewHolder.surfaceView.id
-            bookList.removeAt(pos)
+        bookViewHolder.bookmarkBtn.setOnClickListener { view ->
+            val bookItem = (context as MainActivity).getBoxStore()?.boxFor(BooksItem::class.java)
+            val unBookmarkedBook = bookList[pos]
+            unBookmarkedBook.bookmark = false
+            bookItem.put(unBookmarkedBook)
             notifyItemRemoved(pos)
-            Toast.makeText(context, "Deleted Entry", Toast.LENGTH_SHORT).show()
+            notifyDataSetChanged()
         }
-    }
-
-    fun addItems(books: BookList){
-        books.books!!.forEach { bookList.add(it) }
-        notifyDataSetChanged()
     }
 
 
     class BookViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        var swipeLayout: SwipeLayout = itemView.findViewById(R.id.swipe_bookItem)
+        var swipeLayout: SwipeLayout = itemView.findViewById(R.id.swipe_bookmarked_book)
         var surfaceView: ConstraintLayout = itemView.findViewById(R.id.surface_view)
         var bookTitle: TextView = itemView.findViewById(R.id.book_title)
         var bookSubtitle: TextView = itemView.findViewById(R.id.subtitle)
@@ -105,7 +102,7 @@ class SwipeRecyclerViewAdapter(val context: Context, val bookList: ArrayList<Boo
         var bookPrice: TextView = itemView.findViewById(R.id.price)
         var bookUrl: TextView= itemView.findViewById(R.id.url)
         var bookImage: ImageView = itemView.findViewById(R.id.book_image)
-        var deleteBtn: ImageView = itemView.findViewById(R.id.delete_swipe_button)
+        var bookmarkBtn: ImageView = itemView.findViewById(R.id.bookmark_button)
     }
 
 }

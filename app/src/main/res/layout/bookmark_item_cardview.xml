@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/swipe_bookmarked_book"
+                                app:leftEdgeSwipeOffset="0dp"
+                                app:rightEdgeSwipeOffset="0dp"
+                                xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+            android:id="@+id/bottom_swipe_wrapper"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+    >
+        <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/star_unfilled"
+                android:layout_gravity="center"
+                android:id="@+id/bookmark_button"
+                android:tint="@color/twNeonMagenta"
+        />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/surface_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <ImageView
+                android:layout_width="70dp"
+                android:layout_height="100dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/book_image"
+        />
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/book_image"
+                app:layout_constraintRight_toRightOf="parent"
+                android:id="@+id/book_title"
+                android:scrollHorizontally="false"
+                android:paddingRight="70dp"
+                android:text="Title"
+                android:textSize="14sp"
+        />
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/book_title"
+                app:layout_constraintStart_toEndOf="@id/book_image"
+                android:id="@+id/subtitle"
+                android:scrollHorizontally="false"
+                android:paddingRight="70dp"
+                android:text="Subtitle"
+                android:textSize="12sp"
+        />
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/subtitle"
+                app:layout_constraintStart_toEndOf="@id/book_image"
+                android:id="@+id/isbn13"
+                android:scrollHorizontally="false"
+                android:text="isbn13"
+                android:textSize="10sp"
+        />
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/isbn13"
+                app:layout_constraintStart_toEndOf="@id/book_image"
+                android:id="@+id/price"
+                android:scrollHorizontally="false"
+                android:text="price"
+                android:textSize="10sp"
+        />
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/price"
+                app:layout_constraintStart_toEndOf="@id/book_image"
+                android:id="@+id/url"
+                android:scrollHorizontally="false"
+                android:text="url"
+                android:textSize="10sp"
+        />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.daimajia.swipe.SwipeLayout>

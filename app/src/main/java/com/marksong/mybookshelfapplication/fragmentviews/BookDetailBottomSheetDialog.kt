@@ -6,22 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.marksong.bookshelfapp.model.BookDetailItem
+import com.marksong.bookshelfapp.model.BooksItem
 import com.marksong.mybookshelfapplication.MainActivity
 import com.marksong.mybookshelfapplication.R
+import com.marksong.mybookshelfapplication.utils.BookUtils
 import kotlinx.android.synthetic.main.book_detail_layout.*
 
 class BookDetailBottomSheetDialog: BottomSheetDialogFragment(){
 
-    private lateinit var bookItem: BookDetailItem
+    private lateinit var bookItem: BooksItem
+    private var isBookmarked: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val bookBox = (context as MainActivity).getBoxStore()?.boxFor(BookDetailItem::class.java)
-        val bookList = bookBox.all
-        bookItem = bookList.get(0)
-        bookBox.removeAll()
-
+        retrieveBookDetail()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -30,6 +28,11 @@ class BookDetailBottomSheetDialog: BottomSheetDialogFragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        isBookmarked = BookUtils.checkIfBookmarked(context!!, bookItem, bookmark_star)
+        bookmark_star.setOnClickListener { view ->
+            BookUtils.bookMarkBook(context!!, bookItem, bookmark_star)
+            isBookmarked = !isBookmarked
+        }
         book_detail_title.text = bookItem.title
         book_detail_subtitle.text = bookItem.subtitle
         book_detail_authors.text = bookItem.authors
@@ -47,6 +50,13 @@ class BookDetailBottomSheetDialog: BottomSheetDialogFragment(){
             .load(bookItem.image)
             .into(book_detail_img)
 
+    }
+
+    private fun retrieveBookDetail(){
+        val bookBox = (context as MainActivity).getBoxStore()?.boxFor(BooksItem::class.java)
+        val bookList = bookBox.all
+        val size = bookList.size
+        bookItem = bookList[size-1]
     }
 
 }

@@ -5,10 +5,22 @@
                                                    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
+            android:id="@+id/bookmark_star"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:src="@drawable/star_unfilled"
+            android:tint="@color/twNeonMagenta"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+    />
+
+    <ImageView
             android:layout_width="70dp"
             android:layout_height="100dp"
             android:id="@+id/book_detail_img"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bookmark_star"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="5dp"
@@ -19,7 +31,7 @@
             android:layout_height="0dp"
             android:id="@+id/book_detail_title"
             app:layout_constraintLeft_toRightOf="@+id/book_detail_img"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bookmark_star"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="5dp"
             android:text="Title"
@@ -173,7 +185,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/book_detail_price"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:text="Url"

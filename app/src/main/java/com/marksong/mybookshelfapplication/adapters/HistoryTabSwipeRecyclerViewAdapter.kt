@@ -11,15 +11,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.marksong.bookshelfapp.model.BookList
 import com.marksong.bookshelfapp.model.BooksItem
 import com.marksong.mybookshelfapplication.R
 import com.marksong.mybookshelfapplication.utils.BookUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.marksong.mybookshelfapplication.MainActivity
 
 
-class SwipeRecyclerViewAdapter(val context: Context, val bookList: ArrayList<BooksItem>): RecyclerSwipeAdapter<SwipeRecyclerViewAdapter.BookViewHolder>(){
+class HistoryTabSwipeRecyclerViewAdapter(val context: Context, val bookList: ArrayList<BooksItem>): RecyclerSwipeAdapter<HistoryTabSwipeRecyclerViewAdapter.BookViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
 
@@ -83,16 +83,14 @@ class SwipeRecyclerViewAdapter(val context: Context, val bookList: ArrayList<Boo
         }
 
         bookViewHolder.deleteBtn.setOnClickListener { view ->
+            val bookItem = (context as MainActivity).getBoxStore()?.boxFor(BooksItem::class.java)
+            //Positive of objectbox. Since each object is saved with an id, referencing the model by id will tag specific reference to delete
+            bookItem.remove(bookList[pos])
             bookViewHolder.surfaceView.id
             bookList.removeAt(pos)
             notifyItemRemoved(pos)
             Toast.makeText(context, "Deleted Entry", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    fun addItems(books: BookList){
-        books.books!!.forEach { bookList.add(it) }
-        notifyDataSetChanged()
     }
 
 
