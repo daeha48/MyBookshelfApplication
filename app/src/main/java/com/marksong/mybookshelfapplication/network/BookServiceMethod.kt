@@ -1,7 +1,7 @@
 package com.marksong.bookshelfapp.network
 
+import com.marksong.bookshelfapp.model.BookDetailItem
 import com.marksong.bookshelfapp.model.BookList
-import com.marksong.bookshelfapp.model.BooksItem
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -24,5 +24,5 @@ interface BookServiceMethod{
     @GET("books/{isbn}")
     fun getBookDetail(
             @Path("isbn") isbn: String
-    ): Call<BooksItem>
+    ): Call<BookDetailItem>
 }

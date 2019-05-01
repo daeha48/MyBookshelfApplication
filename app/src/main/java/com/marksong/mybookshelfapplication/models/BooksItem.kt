@@ -2,9 +2,12 @@ package com.marksong.bookshelfapp.model
 
 import javax.annotation.Generated
 import com.google.gson.annotations.SerializedName
+import io.objectbox.annotation.Entity
+import io.objectbox.annotation.Id
 import java.io.Serializable
 
 @Generated("com.robohorse.robopojogenerator")
+@Entity
 data class BooksItem(
 
 	@field:SerializedName("image")
@@ -50,5 +53,8 @@ data class BooksItem(
 	val authors: String? = null,
 
 	@field:SerializedName("desc")
-	val desc: String? = null
+	val desc: String? = null,
+
+	//for objectbox
+	@Id var id: Long = 0
 ): Serializable

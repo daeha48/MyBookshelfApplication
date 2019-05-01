@@ -6,18 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.marksong.bookshelfapp.model.BooksItem
-import com.marksong.bookshelfapp.utils.BOOK_DETAIL
+import com.marksong.bookshelfapp.model.BookDetailItem
+import com.marksong.mybookshelfapplication.MainActivity
 import com.marksong.mybookshelfapplication.R
 import kotlinx.android.synthetic.main.book_detail_layout.*
 
 class BookDetailBottomSheetDialog: BottomSheetDialogFragment(){
 
-    private lateinit var bookItem: BooksItem
+    private lateinit var bookItem: BookDetailItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bookItem = arguments?.getSerializable(BOOK_DETAIL) as BooksItem
+        val bookBox = (context as MainActivity).getBoxStore()?.boxFor(BookDetailItem::class.java)
+        val bookList = bookBox.all
+        bookItem = bookList.get(0)
+        bookBox.removeAll()
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -43,16 +47,6 @@ class BookDetailBottomSheetDialog: BottomSheetDialogFragment(){
             .load(bookItem.image)
             .into(book_detail_img)
 
-    }
-
-    companion object{
-        fun getInstance(bookDetail: BooksItem): BottomSheetDialogFragment? {
-            val fragment = BottomSheetDialogFragment()
-            val bundle = Bundle()
-            bundle.putSerializable(BOOK_DETAIL, bookDetail)
-            fragment.arguments = bundle
-            return fragment
-        }
     }
 
 }

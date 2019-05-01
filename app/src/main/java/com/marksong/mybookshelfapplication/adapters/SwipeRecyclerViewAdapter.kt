@@ -16,7 +16,7 @@ import com.marksong.bookshelfapp.model.BooksItem
 import com.marksong.mybookshelfapplication.R
 import com.marksong.mybookshelfapplication.utils.OpenBookDetailUtil
 import androidx.appcompat.app.AppCompatActivity
-import com.marksong.mybookshelfapplication.fragmentviews.BookDetailBottomSheetDialog
+import androidx.constraintlayout.widget.ConstraintLayout
 
 
 class SwipeRecyclerViewAdapter(val context: Context, val bookList: ArrayList<BooksItem>): RecyclerSwipeAdapter<SwipeRecyclerViewAdapter.BookViewHolder>(){
@@ -48,6 +48,7 @@ class SwipeRecyclerViewAdapter(val context: Context, val bookList: ArrayList<Boo
 
         bookViewHolder.swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut)
         bookViewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right, bookViewHolder.swipeLayout.findViewById(R.id.bottom_swipe_wrapper))
+        bookViewHolder.swipeLayout
 
         bookViewHolder.swipeLayout.addSwipeListener(object : SwipeLayout.SwipeListener {
             override fun onClose(layout: SwipeLayout) {
@@ -55,7 +56,7 @@ class SwipeRecyclerViewAdapter(val context: Context, val bookList: ArrayList<Boo
             }
 
             override fun onUpdate(layout: SwipeLayout, leftOffset: Int, topOffset: Int) {
-                Toast.makeText(context, "Use this swipeable item to bookmark and delete entries",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Use this swipeable item to delete entries",Toast.LENGTH_SHORT).show()
             }
 
             override fun onStartOpen(layout: SwipeLayout) {
@@ -75,7 +76,7 @@ class SwipeRecyclerViewAdapter(val context: Context, val bookList: ArrayList<Boo
             }
         })
 
-        bookViewHolder.swipeLayout.setOnClickListener { view ->
+        bookViewHolder.surfaceView.setOnClickListener { view ->
             val manager = (context as AppCompatActivity).supportFragmentManager
             OpenBookDetailUtil.getBookDetails(context, manager, bookViewHolder.bookIsbn13.text.toString())
         }
@@ -95,6 +96,7 @@ class SwipeRecyclerViewAdapter(val context: Context, val bookList: ArrayList<Boo
 
     class BookViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         var swipeLayout: SwipeLayout = itemView.findViewById(R.id.swipe_bookItem)
+        var surfaceView: ConstraintLayout = itemView.findViewById(R.id.surface_view)
         var bookTitle: TextView = itemView.findViewById(R.id.book_title)
         var bookSubtitle: TextView = itemView.findViewById(R.id.subtitle)
         var bookIsbn13: TextView = itemView.findViewById(R.id.isbn13)

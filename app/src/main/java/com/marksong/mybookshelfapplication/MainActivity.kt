@@ -3,11 +3,15 @@ package com.marksong.mybookshelfapplication
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import com.marksong.bookshelfapp.model.MyObjectBox
 import com.marksong.mybookshelfapplication.fragmentviews.*
+import io.objectbox.BoxStore
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var boxStore: BoxStore
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -45,5 +49,11 @@ class MainActivity : AppCompatActivity() {
             val fragment = NewBooksFragment()
             supportFragmentManager.beginTransaction().replace(R.id.visible_frame, fragment, fragment.javaClass.canonicalName).addToBackStack(null).commit()
         }
+
+        boxStore = MyObjectBox.builder().androidContext(this).build()
+    }
+
+    fun getBoxStore(): BoxStore{
+        return boxStore
     }
 }

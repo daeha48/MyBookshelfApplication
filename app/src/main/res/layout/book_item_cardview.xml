@@ -9,15 +9,13 @@
 
     <LinearLayout
             android:id="@+id/bottom_swipe_wrapper"
-            android:layout_width="160dp"
+            android:layout_width="60dp"
             android:layout_height="match_parent"
-            android:weightSum="2"
     >
         <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:src="@drawable/delete"
-                android:layout_weight="1"
                 android:layout_gravity="center"
                 android:id="@+id/delete_swipe_button"
                 android:tint="@color/colorRed"
@@ -25,6 +23,7 @@
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/surface_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
