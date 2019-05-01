@@ -1,4 +1,4 @@
-package com.marksong.mybookshelfapplication.presenter
+package com.marksong.mybookshelfapplication.utils
 
 import android.content.Context
 import android.widget.Toast
@@ -7,13 +7,12 @@ import com.marksong.bookshelfapp.model.BooksItem
 import com.marksong.bookshelfapp.network.BookServiceMethod
 import com.marksong.mybookshelfapplication.fragmentviews.BookDetailBottomSheetDialog
 import com.marksong.mybookshelfapplication.network.RetrofitHelper
-import com.marksong.mybookshelfapplication.presenter.interfaces.IBookDetailsPresenter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class BookDetailsPresenter: IBookDetailsPresenter{
-    override fun getBookDetails(context: Context, fragmentManager: FragmentManager, isbn13: String) {
+object OpenBookDetailUtil {
+    fun getBookDetails(context: Context, fragmentManager: FragmentManager, isbn13: String) {
         val getBookDetailsService = RetrofitHelper.getBookUrlInstance()?.create(BookServiceMethod::class.java)
         val getBookDetailsCall = getBookDetailsService?.getBookDetail(isbn13)
         getBookDetailsCall?.enqueue(object: Callback<BooksItem> {
@@ -24,10 +23,8 @@ class BookDetailsPresenter: IBookDetailsPresenter{
                     bookDetailBottomSheet?.show(fragmentManager, "newBook_BookDetails")
                 }
             }
-
             override fun onFailure(call: Call<BooksItem>, t: Throwable) {
-                val bookDetailBottomSheet = BookDetailBottomSheetDialog()
-                bookDetailBottomSheet.show(fragmentManager, "newBook_BookDetails")
+                Toast.makeText(context, "Failed to get data for book detail", Toast.LENGTH_SHORT).show()
             }
         })
     }

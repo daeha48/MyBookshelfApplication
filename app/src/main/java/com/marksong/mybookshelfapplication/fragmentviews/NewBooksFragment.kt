@@ -6,25 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
-import com.marksong.mybookshelfapplication.adapters.IBookDetailClick
 import com.marksong.mybookshelfapplication.R
 import com.marksong.mybookshelfapplication.fragmentviews.interfaces.INewBooksFragment
 import com.marksong.mybookshelfapplication.presenter.interfaces.INewBooksPresenter
 import com.marksong.mybookshelfapplication.presenter.NewBooksPresenter
-import com.marksong.mybookshelfapplication.presenter.interfaces.IBookDetailsPresenter
 import kotlinx.android.synthetic.main.books_new_layout.*
 
-class NewBooksFragment: Fragment(), IBookDetailClick, INewBooksFragment {
-    internal lateinit var newBooksFragmentPresenter: INewBooksPresenter
-    internal lateinit var bookClicked: IBookDetailsPresenter
+class NewBooksFragment: Fragment(), INewBooksFragment{
 
-    override fun onBookClicked(isbn13: String) {
-        bookClicked.getBookDetails(context!!, fragmentManager!!, isbn13)
-    }
+    private lateinit var newBooksFragmentPresenter: INewBooksPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         newBooksFragmentPresenter = NewBooksPresenter(this)
     }
 

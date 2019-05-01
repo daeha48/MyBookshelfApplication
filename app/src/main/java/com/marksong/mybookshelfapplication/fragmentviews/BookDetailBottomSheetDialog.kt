@@ -9,18 +9,14 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.marksong.bookshelfapp.model.BooksItem
 import com.marksong.bookshelfapp.utils.BOOK_DETAIL
 import com.marksong.mybookshelfapplication.R
-import com.marksong.mybookshelfapplication.presenter.BookDetailsPresenter
-import com.marksong.mybookshelfapplication.presenter.interfaces.IBookDetailsPresenter
 import kotlinx.android.synthetic.main.book_detail_layout.*
 
 class BookDetailBottomSheetDialog: BottomSheetDialogFragment(){
 
-    internal lateinit var bookDetailsPresenter: IBookDetailsPresenter
     private lateinit var bookItem: BooksItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bookDetailsPresenter = BookDetailsPresenter()
         bookItem = arguments?.getSerializable(BOOK_DETAIL) as BooksItem
     }
 

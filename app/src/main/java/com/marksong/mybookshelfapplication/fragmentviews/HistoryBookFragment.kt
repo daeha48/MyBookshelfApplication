@@ -6,12 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.marksong.mybookshelfapplication.R
-import com.marksong.mybookshelfapplication.adapters.IBookDetailClick
 
-class HistoryBookFragment: Fragment(), IBookDetailClick{
-    override fun onBookClicked(isbn13: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+class HistoryBookFragment: Fragment(){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.books_history_layout,container, false)

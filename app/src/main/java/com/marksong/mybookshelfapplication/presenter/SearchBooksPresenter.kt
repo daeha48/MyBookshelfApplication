@@ -52,8 +52,6 @@ class SearchBooksPresenter(internal var iSearchBooksFragment: ISearchBooksFragme
                 if (response.isSuccessful){
                     val booksFromResponse = response?.body()
                     classAdapter.addItems(booksFromResponse!!)
-//                    search_booklist_recyclerview.layoutManager = LinearLayoutManager(context)
-//                    search_booklist_recyclerview.adapter = SwipeRecyclerViewAdapter(context!!, booksFromResponse!!)
                     iSearchBooksFragment.onSearchBookResult(true, "success")
                 }
                 else {

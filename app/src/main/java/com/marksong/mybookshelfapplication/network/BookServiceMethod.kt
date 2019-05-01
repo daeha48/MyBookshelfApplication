@@ -21,7 +21,7 @@ interface BookServiceMethod{
             @Path("page") page: Int
     ): Call<BookList>
 
-    @GET("books")
+    @GET("books/{isbn}")
     fun getBookDetail(
             @Path("isbn") isbn: String
     ): Call<BooksItem>

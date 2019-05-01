@@ -14,11 +14,12 @@ import com.bumptech.glide.Glide
 import com.marksong.bookshelfapp.model.BookList
 import com.marksong.bookshelfapp.model.BooksItem
 import com.marksong.mybookshelfapplication.R
+import com.marksong.mybookshelfapplication.utils.OpenBookDetailUtil
+import androidx.appcompat.app.AppCompatActivity
+import com.marksong.mybookshelfapplication.fragmentviews.BookDetailBottomSheetDialog
 
 
 class SwipeRecyclerViewAdapter(val context: Context, val bookList: ArrayList<BooksItem>): RecyclerSwipeAdapter<SwipeRecyclerViewAdapter.BookViewHolder>(){
-
-    private lateinit var bookDetailClick: IBookDetailClick
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.book_item_cardview, parent, false)
@@ -75,24 +76,14 @@ class SwipeRecyclerViewAdapter(val context: Context, val bookList: ArrayList<Boo
         })
 
         bookViewHolder.swipeLayout.setOnClickListener { view ->
-            getBookDetail(bookViewHolder.bookIsbn13.text.toString())
+            val manager = (context as AppCompatActivity).supportFragmentManager
+            OpenBookDetailUtil.getBookDetails(context, manager, bookViewHolder.bookIsbn13.text.toString())
         }
 
         bookViewHolder.deleteBtn.setOnClickListener { view ->
             bookList.removeAt(pos)
             notifyItemRemoved(pos)
             Toast.makeText(context, "Deleted Entry", Toast.LENGTH_SHORT).show()
-        }
-
-        bookViewHolder.bookmarkBtn.setOnClickListener { view ->
-            if (!bookViewHolder.boolean){
-                bookViewHolder.bookmarkBtn.setImageResource(R.drawable.star_filled)
-                bookViewHolder.boolean = true
-            }else {
-                bookViewHolder.bookmarkBtn.setImageResource(R.drawable.star_unfilled)
-                bookViewHolder.boolean = false
-            }
-
         }
     }
 
@@ -110,13 +101,7 @@ class SwipeRecyclerViewAdapter(val context: Context, val bookList: ArrayList<Boo
         var bookPrice: TextView = itemView.findViewById(R.id.price)
         var bookUrl: TextView= itemView.findViewById(R.id.url)
         var bookImage: ImageView = itemView.findViewById(R.id.book_image)
-        var bookmarkBtn: ImageView = itemView.findViewById(R.id.bookmark_star_swipe_button)
         var deleteBtn: ImageView = itemView.findViewById(R.id.delete_swipe_button)
-
-        var boolean: Boolean = false
     }
 
-    fun getBookDetail(isbn13: String){
-        bookDetailClick.onBookClicked(isbn13)
-    }
 }

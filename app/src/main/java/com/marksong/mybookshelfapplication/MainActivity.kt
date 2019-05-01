@@ -3,10 +3,7 @@ package com.marksong.mybookshelfapplication
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import com.marksong.mybookshelfapplication.fragmentviews.BookmarkFragment
-import com.marksong.mybookshelfapplication.fragmentviews.HistoryBookFragment
-import com.marksong.mybookshelfapplication.fragmentviews.NewBooksFragment
-import com.marksong.mybookshelfapplication.fragmentviews.SearchBooksFragment
+import com.marksong.mybookshelfapplication.fragmentviews.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 

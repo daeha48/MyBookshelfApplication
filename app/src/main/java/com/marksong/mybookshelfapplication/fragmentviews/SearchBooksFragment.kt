@@ -9,19 +9,16 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.marksong.mybookshelfapplication.R
-import com.marksong.mybookshelfapplication.adapters.IBookDetailClick
 import com.marksong.mybookshelfapplication.fragmentviews.interfaces.ISearchBooksFragment
 import com.marksong.mybookshelfapplication.presenter.SearchBooksPresenter
-import com.marksong.mybookshelfapplication.presenter.interfaces.IBookDetailsPresenter
 import com.marksong.mybookshelfapplication.presenter.interfaces.ISearchBooksPresenter
 import kotlinx.android.synthetic.main.books_search_layout.*
 import kotlinx.android.synthetic.main.books_search_layout.messages_text_view
 
 
 
-class SearchBooksFragment: Fragment(), IBookDetailClick, ISearchBooksFragment{
+class SearchBooksFragment: Fragment(), ISearchBooksFragment{
     private lateinit var searchBooksFragmentPresenter: ISearchBooksPresenter
-    internal lateinit var bookClicked: IBookDetailsPresenter
     private var pageNum: Int = -1
     private lateinit var currentQuery: String
 
@@ -60,10 +57,6 @@ class SearchBooksFragment: Fragment(), IBookDetailClick, ISearchBooksFragment{
                 return false
             }
         })
-    }
-
-    override fun onBookClicked(isbn13: String) {
-        bookClicked.getBookDetails(context!!, fragmentManager!!, isbn13)
     }
 
     override fun onSearchBookResult(success: Boolean, message: String) {
