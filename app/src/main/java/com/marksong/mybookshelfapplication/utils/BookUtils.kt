@@ -11,6 +11,7 @@ import com.marksong.mybookshelfapplication.MainActivity
 import com.marksong.mybookshelfapplication.R
 import com.marksong.mybookshelfapplication.fragmentviews.BookDetailBottomSheetDialog
 import com.marksong.mybookshelfapplication.network.RetrofitHelper
+import io.objectbox.Box
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,27 +37,33 @@ object BookUtils {
 
     fun bookMarkBook(context: Context, BookMarkedbook: BooksItem, starImageView: ImageView){
         val bookItem = (context as MainActivity).getBoxStore()?.boxFor(BooksItem::class.java)
-        BookMarkedbook.bookmark = !BookMarkedbook.bookmark
-        //another pro for objectbox. 'put' can be used for updating and inserting into cache
-        bookItem.put(BookMarkedbook)
-        if (BookMarkedbook.bookmark){
+        val extractedBooks = queryBookFromOB(bookItem, BookMarkedbook)
+        if (extractedBooks.isNotEmpty()){
+            val firstBook = extractedBooks?.first()
+            firstBook.bookmark = !firstBook.bookmark
+            bookItem.put(firstBook)
+            starImageView.setImageDrawable(context.getDrawable(R.drawable.star_unfilled))
+        }else {
+            BookMarkedbook.bookmark = true
+            bookItem.put(BookMarkedbook)
             starImageView.setImageDrawable(context.getDrawable(R.drawable.star_filled))
-        } else{
+        }
+    }
+
+    fun checkIfBookmarked(context: Context, bookToCheck: BooksItem, starImageView: ImageView){
+        val bookItem = (context as MainActivity).getBoxStore()?.boxFor(BooksItem::class.java)
+        val extractBooks = queryBookFromOB(bookItem, bookToCheck)
+        if (extractBooks.isNotEmpty()){
+            starImageView.setImageDrawable(context.getDrawable(R.drawable.star_filled))
+        }else {
             starImageView.setImageDrawable(context.getDrawable(R.drawable.star_unfilled))
         }
     }
 
-    fun checkIfBookmarked(context: Context, bookToCheck: BooksItem, starImageView: ImageView): Boolean{
-        val bookItem = (context as MainActivity).getBoxStore()?.boxFor(BooksItem::class.java)
-        val bookmarkedBookCheck = bookItem.query().equal(BooksItem_.isbn13, bookToCheck.isbn13).equal(BooksItem_.bookmark, true).build()
+    private fun queryBookFromOB(bookBox: Box<BooksItem>, book: BooksItem): List<BooksItem>{
+        val bookmarkedBookCheck = bookBox.query().equal(BooksItem_.isbn13, book.isbn13).equal(BooksItem_.bookmark, true).build()
         val extractBooks = arrayListOf<BooksItem>()
         bookmarkedBookCheck.forEach { extractBooks.add(it) }
-        if (extractBooks.size > 0){
-            starImageView.setImageDrawable(context.getDrawable(R.drawable.star_filled))
-            return true
-        }else {
-            starImageView.setImageDrawable(context.getDrawable(R.drawable.star_unfilled))
-            return false
-        }
+        return extractBooks
     }
 }

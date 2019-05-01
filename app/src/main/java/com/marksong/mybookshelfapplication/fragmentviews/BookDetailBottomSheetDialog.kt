@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.book_detail_layout.*
 class BookDetailBottomSheetDialog: BottomSheetDialogFragment(){
 
     private lateinit var bookItem: BooksItem
-    private var isBookmarked: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,10 +27,9 @@ class BookDetailBottomSheetDialog: BottomSheetDialogFragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        isBookmarked = BookUtils.checkIfBookmarked(context!!, bookItem, bookmark_star)
+        BookUtils.checkIfBookmarked(context!!, bookItem, bookmark_star)
         bookmark_star.setOnClickListener { view ->
             BookUtils.bookMarkBook(context!!, bookItem, bookmark_star)
-            isBookmarked = !isBookmarked
         }
         book_detail_title.text = bookItem.title
         book_detail_subtitle.text = bookItem.subtitle
